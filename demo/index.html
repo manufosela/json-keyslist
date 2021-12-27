@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        background: #fafafa;
+      }
+      json-keyslist {
+        --json-keyslist-width: 22vw;
+        --json-keyslist-background-color: #fafafa;
+      }
+      #demo {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="demo"></div>
+
+    <script type="module">
+      import { html, render } from 'lit';
+      import '../json-keyslist.js';
+
+      const dataListadoPeliculas = [
+        {
+          categoria: ['aventuras', 'ciencia-ficcion'],
+          coleccion: 'Star Wars',
+          director: 'George Lucas',
+          formato: 'blue-ray',
+          titulo: 'La guerra de los clones',
+          valoracion: '9',
+        },
+        {
+          cartel: 'A2',
+          categoria: ['aventuras'],
+          coleccion: 'la mia',
+          director: 'Steven Spielberg',
+          formato: 'blue-ray 4k',
+          titulo: 'Indiana Jones y el templo maldito',
+          valoracion: '10',
+        },
+        {
+          cartel: 'A3',
+          categoria: ['drama'],
+          coleccion: 'la mia',
+          director: 'J.J. Abrahams',
+          formato: 'dvd',
+          titulo: 'Star Trek Nueva Generación',
+          valoracion: '8',
+        },
+      ];
+
+      render(
+        html` <json-keyslist id="listaPeliculas"></json-keyslist>
+          <section id="pelicula"></section>`,
+        document.querySelector('#demo')
+      );
+
+      function init() {
+        const dataChangedEvent = new CustomEvent('json-keyslist-data-changed', {
+          detail: {
+            data: dataListadoPeliculas,
+            mainKey: 'titulo',
+          },
+        });
+        document.dispatchEvent(dataChangedEvent);
+
+        document.addEventListener('json-keyslist-selected-item', e => {
+          console.log(e.detail.mainKey, e.detail.selectedItem);
+          const pelicula = dataListadoPeliculas.find(
+            item => item[e.detail.mainKey] === e.detail.selectedItem
+          );
+          document.getElementById('pelicula').innerHTML = `
+            <h2>${pelicula.titulo}</h2>
+            <p>Director: ${pelicula.director}</p>
+            <p>Valoración: ${pelicula.valoracion}</p>
+          `;
+        });
+      }
+
+      window.addEventListener('load', init);
+    </script>
+  </body>
+</html>
