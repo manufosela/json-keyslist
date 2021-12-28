@@ -1,9 +1,9 @@
 {
-  "name": "json-keyslist",
+  "name": "@manufosela/json-keyslist",
   "description": "Webcomponent json-keyslist following open-wc recommendations",
   "license": "MIT",
   "author": "manufosela",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "json-keyslist.js",
   "type": "module",
   "module": "json-keyslist.js",

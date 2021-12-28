@@ -35,6 +35,7 @@ export class JsonKeyslist extends LitElement {
 
   static get properties() {
     return {
+      id: { type: String },
       mainKey: { type: String },
       jsonData: { type: Object },
       jsonDataKeys: { type: Array },
