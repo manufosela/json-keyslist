@@ -69,14 +69,14 @@ export class JsonKeyslist extends LitElement {
   }
 
   async _dataReceived(e) {
-    let data;
+    let jsonData;
     this.mainKey = e.detail.mainKey || '';
-    if (Array.isArray(e.detail.data)) {
-      data = e.detail.data;
+    if (Array.isArray(e.detail.jsonData)) {
+      jsonData = e.detail.jsonData;
     } else {
-      data = (this.mainKey) ? e.detail.data[this.mainKey] : e.detail.data;
+      jsonData = (this.mainKey) ? e.detail.jsonData[this.mainKey] : e.detail.jsonData;
     }
-    this._processJsonData(data);
+    this._processJsonData(jsonData);
     await this.updateComplete;
     this._addLinkEvents();
   }
@@ -138,7 +138,7 @@ export class JsonKeyslist extends LitElement {
           <li>${key}</li>
         `)}
       </ul>
-    </nav
+    </nav>
     `;
   }
 }

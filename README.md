@@ -27,7 +27,7 @@ npm i json-keyslist
 
 ### Listening for events
 
-- **json-keyslist-data-changed**: Listen for this event to get notified when the data changes. The event detail has mainKey and data properties. Expect the **data** to be an array of objects and the **mainKey** to be the key of the object.
+- **json-keyslist-data-changed**: Listen for this event to get notified when the data changes. The event detail has mainKey and data properties. Expect the **jsonData** to be an array of objects and the **mainKey** to be the key of the object.
 
 ## Theming
 
