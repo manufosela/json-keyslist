@@ -17,6 +17,11 @@ export class JsonKeyslist extends LitElement {
         margin: var(--json-keyslist-link-margin, 0.5rem);
         border-bottom: var(--json-keyslist-link-border-bottom, 1px solid #000);
       }
+      li.title {
+        font-size: var(--json-keyslist-title-font-size, 1.5rem);
+        background-color: var(--json-keyslist-title-background-color, #000);
+        color: var(--json-keyslist-title-color, #fff);
+      }
       a {
         color: var(--json-keyslist-link-color, #000);
         text-decoration: none;
@@ -29,13 +34,13 @@ export class JsonKeyslist extends LitElement {
         font-weight: var(--json-keyslist-selected-link-font-weight, bold);
         background-color: var(--json-keyslist-selected-link-background-color, #a0a0a0);
       }
-
     `;
   }
 
   static get properties() {
     return {
       id: { type: String },
+      title: { type: String },
       mainKey: { type: String },
       jsonData: { type: Object },
       jsonDataKeys: { type: Array },
@@ -45,6 +50,7 @@ export class JsonKeyslist extends LitElement {
   constructor() {
     super();
     this.id = `json-keyslist${Math.floor(Math.random() * 1000000)}`;
+    this.title = null;
     this.mainKey = '';
     this.jsonData = {};
     this.jsonDataKeys = [];
@@ -63,8 +69,13 @@ export class JsonKeyslist extends LitElement {
   }
 
   async _dataReceived(e) {
+    let data;
     this.mainKey = e.detail.mainKey || '';
-    const data = (this.mainKey) ? e.detail.data[this.mainKey] : e.detail.data;
+    if (Array.isArray(e.detail.data)) {
+      data = e.detail.data;
+    } else {
+      data = (this.mainKey) ? e.detail.data[this.mainKey] : e.detail.data;
+    }
     this._processJsonData(data);
     await this.updateComplete;
     this._addLinkEvents();
@@ -94,6 +105,16 @@ export class JsonKeyslist extends LitElement {
     e.target.classList.add('selected');    
   }
 
+  _getTitle() {
+    const title = (this.title) ? html`
+    <ul>
+      <li class="title"><strong>${this.title}</strong></li>
+    </ul>
+    `: '';
+    return title;
+  }
+
+
   _processJsonData(jsonData) {
     if (Array.isArray(jsonData)) {
       this.jsonDataKeys = jsonData.map((item) => {
@@ -110,11 +131,14 @@ export class JsonKeyslist extends LitElement {
 
   render() {
     return html`
+    <nav>
+      ${this._getTitle()}
       <ul>
         ${this.jsonDataKeys.map((key) => html`
           <li>${key}</li>
         `)}
       </ul>
+    </nav
     `;
   }
 }
