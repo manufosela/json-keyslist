@@ -43,6 +43,9 @@ npm i json-keyslist
 - **--json-keyslist-selected-link-color** .Default #333
 - **--json-keyslist-selected-link-font-weight** .Default bold
 - **--json-keyslist-selected-link-background-color** .Default #a0a0a0
+- **--json-keyslist-title-font-size**. Default 1.5rem
+- **--json-keyslist-title-background-color**. Default #000
+- **--json-keyslist-title-color**. Default #fff
 
 ## Linting and formatting
 
