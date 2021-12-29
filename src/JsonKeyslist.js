@@ -64,7 +64,8 @@ export class JsonKeyslist extends LitElement {
 
   async _dataReceived(e) {
     this.mainKey = e.detail.mainKey || '';
-    this._processJsonData(e.detail.data);
+    const data = (this.mainKey) ? e.detail.jsonData[this.mainKey] : e.detail.jsonData;
+    this._processJsonData(data);
     await this.updateComplete;
     this._addLinkEvents();
   }
