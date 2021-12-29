@@ -129,7 +129,13 @@ export class JsonKeyslist extends LitElement {
           return item;
         });
       } else {
-        this.jsonDataKeys = Object.keys(jsonData);
+        const keys = Object.keys(jsonData);
+        this.jsonDataKeys = keys.map((key) => {
+          if (typeof jsonData[key] === 'object') {
+            return html`<a href="#${key}" data-value='${key}'>${key}</a>`;
+          }
+          return jsonData[key];
+        });
       }
       this.requestUpdate();
     } else {
