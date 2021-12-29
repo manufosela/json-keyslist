@@ -71,14 +71,18 @@ export class JsonKeyslist extends LitElement {
   async _dataReceived(e) {
     let jsonData;
     this.mainKey = e.detail.mainKey || '';
-    if (Array.isArray(e.detail.jsonData)) {
-      jsonData = e.detail.jsonData;
+    if (e.detail.jsonData) {
+      if (Array.isArray(e.detail.jsonData)) {
+        jsonData = e.detail.jsonData;
+      } else {
+        jsonData = (this.mainKey) ? e.detail.jsonData[this.mainKey] : e.detail.jsonData;
+      }
+      this._processJsonData(jsonData);
+      await this.updateComplete;
+      this._addLinkEvents();
     } else {
-      jsonData = (this.mainKey) ? e.detail.jsonData[this.mainKey] : e.detail.jsonData;
+      console.warn('No data received');
     }
-    this._processJsonData(jsonData);
-    await this.updateComplete;
-    this._addLinkEvents();
   }
 
   _addLinkEvents() {
@@ -116,17 +120,22 @@ export class JsonKeyslist extends LitElement {
 
 
   _processJsonData(jsonData) {
-    if (Array.isArray(jsonData)) {
-      this.jsonDataKeys = jsonData.map((item) => {
-        if (typeof item === 'object') {
-          return html`<a href="#${item[this.mainKey]}" data-value='${item[this.mainKey]}'>${item[this.mainKey]}</a>`;
-        }
-        return item;
-      });
+    if (jsonData) {
+      if (Array.isArray(jsonData)) {
+        this.jsonDataKeys = jsonData.map((item) => {
+          if (typeof item === 'object') {
+            return html`<a href="#${item[this.mainKey]}" data-value='${item[this.mainKey]}'>${item[this.mainKey]}</a>`;
+          }
+          return item;
+        });
+      } else {
+        this.jsonDataKeys = Object.keys(jsonData);
+      }
+      this.requestUpdate();
     } else {
-      this.jsonDataKeys = Object.keys(jsonData);
+      this.jsonDataKeys = [];
+      console.warn('No data received');
     }
-    this.requestUpdate();
   }
 
   render() {
