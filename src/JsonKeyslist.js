@@ -10,7 +10,8 @@ export class JsonKeyslist extends LitElement {
         background-color: var(--json-keyslist-background-color, #fff);
       }
       ul {
-        width: var(--json-keyslist-width, 100%);
+        margin:0;
+        padding:0;
       }
       li {
         list-style: none;
