@@ -120,6 +120,7 @@ export class JsonKeyslist extends LitElement {
     });
     document.dispatchEvent(event);
     this.selectedItem = value;
+    this.__markSelecteditem();
   }
 
   _getTitle() {
