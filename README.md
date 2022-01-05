@@ -27,6 +27,10 @@ npm i json-keyslist
 - **jsonDataKeys**: Array with keys to show in a list. Type Array
 - **selectedItem**: Value of item selected. Type String
 
+## Public Methods
+
+- **setSelectedItem(item)**: Set selected item without click in the list.
+
 ## Events
 
 ### Dispatched Events

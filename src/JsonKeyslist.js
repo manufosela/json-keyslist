@@ -70,11 +70,10 @@ export class JsonKeyslist extends LitElement {
     document.dispatchEvent(componentCreatedEvent);
   }
 
-  updated(changedProperties) {
-    if (changedProperties.has('selectedItem')) {
-      this.__markSelecteditem();
-      this.shadowRoot.querySelector(`a[data-value='${this.selectedItem}']`).dispatchEvent(new Event('click'));
-    }
+  setSelectedItem(value) {
+    this.selectedItem = value;
+    this.__markSelecteditem();
+    this.shadowRoot.querySelector(`a[data-value='${this.selectedItem}']`).dispatchEvent(new Event('click'));
   }
 
   async _dataReceived(e) {
