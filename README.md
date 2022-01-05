@@ -18,6 +18,15 @@ npm i json-keyslist
 <json-keyslist id="json-keyslist1"></json-keyslist>
 ```
 
+## Properties
+
+- **id**: Id of the component used to indentify itself. Type String
+- **title**: To show like a head of list. Type String
+- **mainKey**: Main key of json data to show. Type String
+- **jsonData**: Json with data to show keys in a list. Type Object
+- **jsonDataKeys**: Array with keys to show in a list. Type Array
+- **selectedItem**: Value of item selected. Type String
+
 ## Events
 
 ### Dispatched Events

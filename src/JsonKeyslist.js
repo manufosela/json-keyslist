@@ -45,6 +45,7 @@ export class JsonKeyslist extends LitElement {
       mainKey: { type: String },
       jsonData: { type: Object },
       jsonDataKeys: { type: Array },
+      selectedItem: { type: String },
     };
   }
 
@@ -67,6 +68,13 @@ export class JsonKeyslist extends LitElement {
       },
     });
     document.dispatchEvent(componentCreatedEvent);
+  }
+
+  updated(changedProperties) {
+    if (changedProperties.has('selectedItem')) {
+      this.__markSelecteditem();
+      this.shadowRoot.querySelector(`a[data-value='${this.selectedItem}']`).dispatchEvent(new Event('click'));
+    }
   }
 
   async _dataReceived(e) {
@@ -94,6 +102,14 @@ export class JsonKeyslist extends LitElement {
     });
   }
 
+  __markSelecteditem() {
+    [...this.shadowRoot.querySelectorAll('a')].forEach((link) => {
+      link.classList.remove('selected');
+    });
+    const item = this.shadowRoot.querySelector(`a[data-value='${this.selectedItem}']`);
+    item.classList.add('selected');
+  }
+
   _handleClickElement(e) {
     e.preventDefault();
     const {value} = e.target.dataset;
@@ -104,10 +120,7 @@ export class JsonKeyslist extends LitElement {
       },
     });
     document.dispatchEvent(event);
-    [...this.shadowRoot.querySelectorAll('a')].forEach((link) => {
-      link.classList.remove('selected');
-    });
-    e.target.classList.add('selected');    
+    this.selectedItem = value;
   }
 
   _getTitle() {

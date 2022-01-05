@@ -79,6 +79,8 @@
             <p>Director: ${pelicula.director}</p>
             <p>Valoración: ${pelicula.valoracion}</p>
           `;
+          document.getElementById('listaPeliculas').selectedItem =
+            e.detail.selectedItem;
         });
       }
 
